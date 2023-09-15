@@ -1,0 +1,45 @@
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background-color: red;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background-color: blue;
+    min-height: 80vh;
+    margin: 0 auto;
+}
+
+.results {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    background-color: green;
+    font-size: 5rem;
+    color: beige;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    
+}
+
+.items {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 3rem;
+    color: beige;
+    border-radius: 100%;
+    width: 5rem;
+    height: 5rem;
+    padding: 11px;
+    cursor: pointer;
+
+}
+
