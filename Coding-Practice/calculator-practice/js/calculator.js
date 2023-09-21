@@ -1,5 +1,5 @@
 const numbers = document.querySelectorAll('.numbers');
-const result = document.querySelector('.results span');
+const result = document.querySelector('.results');
 
 let firstValue = "";
 let isFirstValue = false;
@@ -19,11 +19,48 @@ for(let i = 0; i < numbers.length; i++) {
         }
     })
 }
-
+//This function can be reworked
 function getFirstValue(valueAtr) {
     result.innerHTML = '';
     firstValue += valueAtr;
     result.innerHTML = firstValue;
     firstValue = +firstValue;
 }
+
+//=============================================================================================================
+TODO: // the code below is to allow me to use the keyboard to type the buttons in addition to clicking them
+// This will need to be configured to work with the calculator
+// ill need to find the key code associated with the number and math sign for this to work
+//theres 2 sets of key codes one for the numbers along the top of the keyboard and the other is for the side keypad
+//ill need to figure out how this will work for both!
+//=============================================================================================================
+
+// function playSound(e) {
+//     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+//     const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+//     if (!audio) return; // this will stop the function from running so i wont get an uncaught TypeError
+//     audio.currentTime = 0; // this will rewind the audio back to zero
+//     audio.play();
+//     key.classList.add("playing"); // this is adding the class of "playing" to any key that has the data-key attribute
+//   }
+//   //you want to listen to every single key on the page to know when it ends
+//   const keys = document.querySelectorAll(".key");
+
+//   function removeTransition(e) {
+//     if (e.propertyName !== "transform") return; // skip it if its not a transform
+//     console.log(this);
+//     //this is always equal to whatever got called against it, in this case "this" is equal to "key"
+
+//     // FIGURE OUT AND UNDERSTAND WHY keys.classList.remove("playing"); DIDN'T WORK, BUT this.classList.remove("playing"); DID????
+
+//     TODO: 
+//     this.classList.remove("playing");
+//   }
+
+//   //this is listening for the transition end on each one
+//   //when you have an array of elements you cant listen on all of them, you need to loop over each one and add an event listener
+//   keys.forEach((key) =>
+//     key.addEventListener("transitionend", removeTransition)
+//   );
+//   window.addEventListener("keydown", playSound);
 
