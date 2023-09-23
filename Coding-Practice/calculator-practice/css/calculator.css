@@ -49,6 +49,7 @@ h1 {
     height: 5rem;
     padding: 11px;
     cursor: pointer;
+    transition: all .07s ease;
 
 }
 
@@ -86,4 +87,16 @@ h1 {
     /* transition: .3s; */
     }
 
+    .key {
+        transition: all .07s ease;
+      }
 
+.highlight {
+    transform: scale(1.1);
+    border-color: red;
+    box-shadow: 0 0 1rem red;
+}
+
+
+  
+  
