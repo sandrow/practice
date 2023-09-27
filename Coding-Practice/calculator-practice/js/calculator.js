@@ -1,5 +1,10 @@
 const numbers = document.querySelectorAll('.numbers');
 const result = document.querySelector('.results');
+const signs = document.querySelectorAll('.sign');
+const equals = document.querySelector('.equals');
+const clear = document.querySelector('.clear');
+const negative = document.querySelector('.negative');
+const percent = document.querySelector('.percent');
 
 let firstValue = "";
 let isFirstValue = false;
@@ -14,8 +19,10 @@ for(let i = 0; i < numbers.length; i++) {
         //this is setting the selected number
         let atr = e.target.getAttribute('data-button');
         if(isFirstValue === false) {
-
             getFirstValue(atr)
+        }
+        if(isSecondValue === false) {
+            getSecondValue(atr)
         }
     })
 }
@@ -27,6 +34,105 @@ function getFirstValue(valueAtr) {
     firstValue = +firstValue;
 }
 
+function getSecondValue(valueAtr2){
+    // need to set the conditions in order to show the second value
+    // need to make sure that the "first value" and "sign" isn't empty
+    if (firstValue != '' && sign != ''){
+        secondValue += valueAtr2;
+        result.innerHTML = secondValue;
+        secondValue = +secondValue;
+    }
+    
+
+}
+
+// here is when we get the "sign"
+// why a for loop?
+
+
+function getSign() {
+    for(let i = 0; i < signs.length; i++) {
+    signs[i].addEventListener('click', (e) => {
+        //this is setting the selected number
+        sign = e.target.getAttribute('value');
+        isFirstValue = true;
+        
+        })
+    }
+}
+
+getSign();
+
+//this is doig the actual calculations for each sign thats selected
+equals.addEventListener('click', () => {
+    result.innerHTML = '';
+    if(sign === "+") {
+        resultValue = firstValue + secondValue;
+    } else if (sign === "-") {
+        resultValue = firstValue - secondValue;
+    } else if (sign === "x") {
+        resultValue = firstValue * secondValue;
+    } else if (sign === "/") {
+        resultValue = firstValue / secondValue;
+    } 
+        result.innerHTML = resultValue;
+        //this is allowing us to add on to the calculation but setting the results to the first value and resetting the second value to be empty.
+        firstValue = resultValue;
+        secondValue = '';
+
+        checkResultLength();
+});
+
+function checkResultLength(){
+    //this is turning the result into an string
+    resultValue = JSON.stringify(resultValue);
+    if(resultValue.length >= 8) {
+        //this is turning the result into an object
+        resultValue = JSON.parse(resultValue);
+        result.innerHTML = resultValue.toFixed(5);
+    }
+
+}
+
+// this is setting up the negative sign 
+negative.addEventListener('click', () => {
+    result.innerHTML = '';
+    if(firstValue != '') {
+        resultValue = -firstValue;
+        firstValue = resultValue;
+    }
+    if(firstValue != '' && secondValue != '' && sign != ''){
+        resultValue = -resultValue;
+    }
+
+    result.innerHTML = resultValue;
+})
+
+// this is setting up the percent sign 
+percent.addEventListener('click', () => {
+    result.innerHTML = '';
+    if(firstValue != '') {
+        resultValue = firstValue / 100;
+        firstValue = resultValue;
+    }
+    if(firstValue != '' && secondValue != '' && sign != ''){
+        resultValue = resultValue / 100;
+    }
+
+    result.innerHTML = resultValue;
+})
+
+// this is setting up the clear sign 
+clear.addEventListener('click', () => {
+    result.innerHTML = 0;
+    
+    firstValue = "";
+    isFirstValue = false;
+    secondValue = "";
+    isSecondValue = false;
+    sign = "";
+    resultValue = 0;
+})
 //=============================================================================================================
 // the code below is to allow me to use the keyboard to type the buttons in addition to clicking them
 // This will need to be configured to work with the calculator
@@ -35,14 +141,10 @@ function getFirstValue(valueAtr) {
 //ill need to figure out how this will work for both!
 //=============================================================================================================
 
-function playSound(e) {
+function highlightKey(e) {
     
     const key = document.querySelector(`.items[data-key="${e.keyCode}"],[data-keyAlt="${e.keyCode}"]`);
-    
-    // if (!audio) return; // this will stop the function from running so i wont get an uncaught TypeError
-    // audio.currentTime = 0; // this will rewind the audio back to zero
-    // audio.play();
-    key.classList.add("highlight"); // this is adding the class of "playing" to any key that has the data-key attribute
+    key.classList.add("highlight"); // this is adding the class of "highlight" to any key that has the data-key attribute
     
 }
   //you want to listen to every single key on the page to know when it ends
@@ -59,9 +161,7 @@ function playSound(e) {
     console.log(this);
     //this is always equal to whatever got called against it, in this case "this" is equal to "key"
 
-    // FIGURE OUT AND UNDERSTAND WHY keys.classList.remove("playing"); DIDN'T WORK, BUT this.classList.remove("playing"); DID????
-
-     
+    // FIGURE OUT AND UNDERSTAND WHY keys.classList.remove("highlight"); DIDN'T WORK, BUT this.classList.remove("highlight"); didnt!
     this.classList.remove("highlight");
   }
 
@@ -70,5 +170,5 @@ function playSound(e) {
   keys.forEach((key) =>
     key.addEventListener("transitionend", removeTransition)
   );
-  window.addEventListener("keydown", playSound);
+  window.addEventListener("keydown", highlightKey);
 
